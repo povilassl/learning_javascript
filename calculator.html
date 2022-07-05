@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      let text_array = [];
+      let text_str = "";
+
+      function answer_eval() {
+        let new_numbers_arr = text_array.join("").split(/[+-]/);
+        let new_symbols_arr = [];
+        let j = 0;
+        for (let i = 0; i < text_array.length; i++) {
+          if (text_array[i] === "+" || text_array[i] === "-") {
+            new_symbols_arr[j] = text_array[i];
+            j++;
+          }
+        }
+
+        let ans = parseFloat(new_numbers_arr[0]);
+
+        for (let i = 1; i < new_numbers_arr.length; i++) {
+          if (new_symbols_arr[i - 1] === "+") {
+            ans += parseFloat(new_numbers_arr[i]);
+          } else {
+            ans -= parseFloat(new_numbers_arr[i]);
+          }
+        }
+        text_array = [];
+        text_array[0] = ans;
+      }
+
+      function updateText() {
+        text_str = text_array.join("");
+        document.getElementById("text_field").innerHTML = text_str;
+      }
+
+      function button1() {
+        text_array.push("1");
+        updateText();
+      }
+      function button2() {
+        text_array.push("2");
+        updateText();
+      }
+      function button3() {
+        text_array.push("3");
+        updateText();
+      }
+      function button4() {
+        text_array.push("4");
+        updateText();
+      }
+      function button5() {
+        text_array.push("5");
+        updateText();
+      }
+      function button6() {
+        text_array.push("6");
+        updateText();
+      }
+      function button7() {
+        text_array.push("7");
+        updateText();
+      }
+      function button8() {
+        text_array.push("8");
+        updateText();
+      }
+      function button9() {
+        text_array.push("9");
+        updateText();
+      }
+      function button0() {
+        text_array.push("0");
+        updateText();
+      }
+      function buttonDot() {
+        let temp = text_array.pop();
+        if (temp >= 0 && temp <= 9) {
+          text_array.push(temp);
+          text_array.push(".");
+          updateText();
+        }
+      }
+      function buttonPlus() {
+        if (text_array.length === 0) {
+          return;
+        }
+        let temp = text_array.pop();
+        if (temp === "+" || temp === "-") {
+        } else {
+          text_array.push(temp);
+        }
+        text_array.push("+");
+        updateText();
+      }
+
+      function buttonMinus() {
+        if (text_array.length === 0) {
+          return;
+        }
+        let temp = text_array.pop();
+        if (temp === "+" || temp === "-") {
+        } else {
+          text_array.push(temp);
+        }
+        text_array.push("-");
+        updateText();
+      }
+
+      function buttonDel() {
+        text_array.pop();
+        updateText();
+      }
+
+      function buttonEval() {
+        if (text_array.length === 0) {
+          return;
+        }
+        answer_eval();
+        updateText();
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="calculator">
+      <div class="text_field" id="text_field"></div>
+      <div class="buttons">
+        <div class="operators">
+          <div class="buttonPlus" onclick="buttonPlus()">+</div>
+          <div class="buttonMinus" onclick="buttonMinus()">-</div>
+        </div>
+
+        <div class="left_panel">
+          <div class="numbers">
+            <div type="div" onclick="button7()">7</div>
+            <div type="div" onclick="button8()">8</div>
+            <div type="div" onclick="button9()">9</div>
+          </div>
+          <div class="numbers">
+            <div type="div" onclick="button4()">4</div>
+            <div type="div" onclick="button5()">5</div>
+            <div type="div" onclick="button6()">6</div>
+          </div>
+          <div class="numbers">
+            <div type="div" onclick="button1()">1</div>
+            <div type="div" onclick="button2()">2</div>
+            <div type="div" onclick="button3()">3</div>
+          </div>
+          <div class="numbers">
+            <div type="div" onclick="button0()">0</div>
+            <div type="div" onclick="buttonDot()">.</div>
+            <div type="div" onclick="buttonDel()">C</div>
+          </div>
+        </div>
+        <div type="button" class="buttonEval" onclick="buttonEval()">=</div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .text_field {
+    border: 1px;
+    border-style: solid;
+    height: 36px;
+    padding: 10px;
+  }
+
+  .numbers div {
+    display: inline-block;
+    border: 1px solid;
+    margin: 10px 0px 10px 10px;
+    background-color: rgb(235, 227, 227);
+    width: 80px;
+    height: 36px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .left_panel {
+    display: inline-block;
+  }
+
+  .calculator {
+    border: 2 px;
+    border-color: black;
+    border-style: solid;
+  }
+
+  .text_field {
+    border: 1px solid;
+    border-color: black;
+    text-align: end;
+    margin: 10px 10px 10px 10px;
+    font-size: 30px;
+  }
+
+  .operators div {
+    display: inline-block;
+    border: 1px;
+    border-style: solid;
+    text-align: center;
+    margin: 10px 5px 10px 10px;
+    width: 222px;
+    cursor: pointer;
+    background-color: rgb(235, 227, 227);
+    height: 36px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  div.buttonEval {
+    display: inline-block;
+    border: 1px solid #3079ed;
+    border-radius: 1px;
+    width: 17%;
+    text-align: center;
+    padding: 127px 13px;
+    margin: 10px 6px 10px 0;
+    vertical-align: top;
+    cursor: pointer;
+    color: #fff;
+    background-color: #4d90fe;
+    transition: all 0.2s ease-in-out;
+  }
+
+  body {
+    font-family: "Courier New", Courier, monospace;
+    width: 500px;
+    margin: 4% auto;
+    font-family: "Source Sans Pro", sans-serif;
+    letter-spacing: 5px;
+    font-size: 1.8rem;
+  }
+</style>

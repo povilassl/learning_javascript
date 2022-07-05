@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <script>
+      let time = 0;
+      let timeDisplay = "";
+      let timeValue = null;
+      let timeRunning = false;
+      let minutes;
+      let seconds;
+
+      function defaultTime() {
+        document.getElementById("time").innerHTML = "00:00";
+      }
+
+      function runTime() {
+        if (time >= 60 * 60) {
+          buttonReset();
+          return;
+        }
+
+        seconds = time % 60;
+        minutes = (time - seconds) / 60;
+
+        if (minutes < 10) {
+          minutes = "0" + minutes;
+        }
+
+        if (seconds < 10) {
+          seconds = "0" + seconds;
+        }
+
+        timeDisplay = minutes + ":" + seconds;
+        document.getElementById("time").innerHTML = timeDisplay;
+        time++;
+        timeValue = setTimeout(function () {
+          runTime();
+        }, 1000);
+      }
+
+      function resetTime() {
+        time = 0;
+        timeDisplay = "";
+        clearInterval(timeValue);
+        document.getElementById("time").innerHTML = "00:00";
+        timeRunning = false;
+      }
+
+      function buttonStart() {
+        if (timeRunning === false) {
+          timeRunning = true;
+          runTime();
+        }
+      }
+      function buttonStop() {
+        clearInterval(timeValue);
+        timeRunning = false;
+      }
+      function buttonReset() {
+        resetTime();
+      }
+    </script>
+  </head>
+  <body onload="defaultTime()">
+    <center>
+      <p class="name1">STOPWATCH</p>
+      <p class="name2">VANILLA JAVASCRIPT STOPWATCH</p>
+      <div id="time" class="time">time</div>
+      <div class="button">
+        <button type="button" class="button1" onclick="buttonStart()">
+          Start
+        </button>
+        <button type="button" class="button2" onclick="buttonStop()">
+          Stop
+        </button>
+        <button type="button" class="button3" onclick="buttonReset()">
+          Reset
+        </button>
+      </div>
+    </center>
+  </body>
+</html>
+<link
+  href="https://fonts.googleapis.com/css?family=Orbitron"
+  rel="stylesheet"
+/>
+<style>
+  body {
+    font-size: 50px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-family: Orbitron;
+    color: #9028ff;
+    background-color: black;
+  }
+
+  .button1,
+  .button2,
+  .button3 {
+    font-family: Orbitron;
+    background-color: #9028ff;
+    border: none;
+    border-radius: 10%;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  .button1:active,
+  .button2:active,
+  .button3:active {
+    background-color: #550ca3;
+  }
+</style>

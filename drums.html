@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- audio imports -->
+    <audio
+      id="player_snare"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/snare.wav"
+    ></audio>
+    <audio
+      id="player_kick"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/kick.wav"
+    ></audio>
+    <audio
+      id="player_tom_high"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/tom-high.wav"
+    ></audio>
+    <audio
+      id="player_tom_mid"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/tom-mid.wav"
+    ></audio>
+    <audio
+      id="player_tom_low"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/tom-low.wav"
+    ></audio>
+    <audio
+      id="player_crash"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/crash.wav"
+    ></audio>
+    <audio
+      id="player_ride"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/ride.wav"
+    ></audio>
+    <audio
+      id="player_hihat_open"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/hihat-open.wav"
+    ></audio>
+    <audio
+      id="player_hihat_close"
+      src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/sounds/hihat-close.wav"
+    ></audio>
+
+    <!-- scripts -->
+    <script>
+      //choose sound
+      let chosen;
+      window.addEventListener("keydown", (event) => {
+        switch (event.key) {
+          case "j":
+            chosen = "player_snare";
+            break;
+          case "b":
+            chosen = "player_kick";
+            break;
+          case "v":
+            chosen = "player_kick";
+            break;
+          case "h":
+            chosen = "player_tom_high";
+            break;
+          case "g":
+            chosen = "player_tom_mid";
+            break;
+          case "f":
+            chosen = "player_tom_low";
+            break;
+          case "e":
+            chosen = "player_crash";
+            break;
+          case "r":
+            chosen = "player_ride";
+            break;
+          case "i":
+            chosen = "player_hihat_open";
+            break;
+          case "k":
+            chosen = "player_hihat_close";
+            break;
+          default:
+            chosen = -1;
+        }
+        if (chosen != -1) {
+          document.getElementById(chosen).play();
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="buttons">
+        <div class="keys buttonJ">j</div>
+        <div class="keys buttonB">b</div>
+        <div class="keys buttonV">v</div>
+        <div class="keys buttonH">h</div>
+        <div class="keys buttonG">g</div>
+        <div class="keys buttonF">f</div>
+        <div class="keys buttonE">e</div>
+        <div class="keys buttonR">r</div>
+        <div class="keys buttonI">i</div>
+        <div class="keys buttonK">k</div>
+      </div>
+
+      <img
+        id="crash-ride"
+        class="crash-cymbal"
+        src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/img/crash.png"
+        alt="Crash cymbal"
+      />
+      <img
+        id="hihat-top"
+        class="hihat-top-cymbal"
+        src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/img/hihat-top.png"
+        alt="Hi Hat cymbal"
+      />
+
+      <img
+        class="drum-kit"
+        src="https://raw.githubusercontent.com/ArunMichaelDsouza/javascript-30-course/master/src/01-javascript-drum-kit/img/drum-kit.png"
+        alt="Drum Kit"
+      />
+    </div>
+  </body>
+</html>
+
+<style>
+  #container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #drum-kit {
+    position: absolute;
+  }
+
+  #crash-ride {
+    position: absolute;
+    left: 42px;
+    top: 78px;
+    transform: rotate(-7deg);
+  }
+
+  #hihat-top {
+    position: absolute;
+    top: 117px;
+    left: 283px;
+  }
+
+  .keys {
+    font-family: "Times New Roman", Times, serif;
+    position: absolute;
+    width: 35px;
+    height: 30px;
+    text-align: center;
+    border-radius: 4px;
+    border: 3px solid #aaa;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eaeaea;
+    color: #444;
+    padding: 5px 0px 0px 0px;
+  }
+
+  .buttonJ {
+    top: 205px;
+    left: 305px;
+  }
+  .buttonB {
+    top: 250px;
+    left: 230px;
+  }
+  .buttonV {
+    top: 250px;
+    left: 180px;
+  }
+  .buttonH {
+    top: 175px;
+    left: 240px;
+  }
+  .buttonG {
+    top: 160px;
+    left: 160px;
+  }
+  .buttonF {
+    top: 240px;
+    left: 95px;
+  }
+  .buttonE {
+    top: 50px;
+    left: 50px;
+  }
+  .buttonR {
+    top: 50px;
+    left: 120px;
+  }
+  .buttonI {
+    top: 90px;
+    left: 290px;
+  }
+  .buttonK {
+    top: 90px;
+    left: 360px;
+  }
+</style>

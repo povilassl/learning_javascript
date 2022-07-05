@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+
+  <body>
+    <div class="game">
+      <div class="header">
+        <h2>THE GREAT</h2>
+        <div id="rgb_text" class="rgb_text">RGB</div>
+        <h2>GUESSING GAME</h2>
+      
+      <div class="messages">
+        <div id="refresh" onclick="refreshColors()"></div>
+        <div id="message"></div>
+      </div>
+
+      <div class="my_buttons">
+        <div class="row1">
+          <div id="color0" class="colors" onclick="colorChosen(0)"></div>
+          <div id="color1" class="colors" onclick="colorChosen(1)"></div>
+          <div id="color2" class="colors" onclick="colorChosen(2)"></div>
+        </div>
+        <div class="row2">
+          <div id="color3" class="colors" onclick="colorChosen(3)"></div>
+          <div id="color4" class="colors" onclick="colorChosen(4)"></div>
+          <div id="color5" class="colors" onclick="colorChosen(5)"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- SCRIPTS -->
+<script>
+  let correct;
+  let correct_rgb;
+  let done = false;
+
+  function refreshColors() {
+    let r;
+    let g;
+    let b;
+    done = false;
+    document.getElementById("refresh").innerHTML = "NEW COLORS";
+    document.getElementById("message").innerHTML = "";
+
+    correct = Math.round(Math.random() * 6);
+    for (let i = 0; i < 6; i++) {
+      r = Math.floor(Math.random() * 256);
+      g = Math.floor(Math.random() * 256);
+      b = Math.floor(Math.random() * 256);
+
+      if (i === correct) {
+        document.getElementById("rgb_text").innerHTML =
+          "RGB(" + r + ", " + g + ", " + b + ")";
+
+        correct_rgb = "rgb(" + r + "," + g + "," + b + ")";
+      }
+      document.getElementById("color" + i).style.background =
+        "rgb(" + r + "," + g + "," + b + ")";
+    }
+  }
+
+  function colorChosen(value) {
+    if (done) {
+      return;
+    }
+    if (value == correct) {
+      done = true;
+
+      document.getElementById("refresh").innerHTML = "PLAY AGAIN";
+      for (let i = 0; i < 6; i++) {
+        document.getElementById("color" + i).style.background = correct_rgb;
+      }
+      document.getElementById("message").innerHTML = "CORRECT";
+    } else {
+      document.getElementById("color" + value).style.background = "#232323";
+      document.getElementById("message").innerHTML = "TRY AGAIN";
+    }
+  }
+
+  //Program start
+  refreshColors();
+</script>
+
+<!-- STYLE -->
+<style>
+  .row1 div,
+  .row2 div {
+    display: inline-block;
+  }
+
+  .colors {
+    transition: 0.3s ease-in;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    border-radius: 20px;
+    background: #eaeaea;
+    margin: 3px;
+  }
+
+  .messages div {
+    display: inline-block;
+    padding-top: 10px;
+    background-color: white;
+    padding-bottom: 15px;
+    color: #2c8e99;
+    text-align: center;
+    
+  }
+
+  .header {
+    text-align: center;
+    background: #2c8e99;
+    color: white;
+    width: 100%;
+    height: 150px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  body {
+    font-family: sans-serif;
+    margin: 0%;
+  }
+
+  .my_buttons {
+    width: 100%;
+    height: 510px;
+    background: #232323;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .rgb_text {
+    font-size: 30px;
+  }
+</style>

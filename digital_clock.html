@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="time" class="time"></div>
+    <script>
+      function getTime() {
+        const d = new Date();
+        let year = d.getFullYear();
+        let month = d.getMonth() + 1;
+        let day = d.getDate();
+        let hour = d.getHours();
+        let minute = d.getMinutes();
+        let second = d.getSeconds();
+        let time =
+          year +
+          "/" +
+          month +
+          "/" +
+          day +
+          " " +
+          hour +
+          ":" +
+          minute +
+          ":" +
+          second;
+        document.getElementById("time").innerHTML = time;
+        let t = setTimeout(function () {
+          getTime(), 1000;
+        });
+      }
+      getTime();
+    </script>
+  </body>
+  <link
+    href="https://fonts.googleapis.com/css?family=Orbitron"
+    rel="stylesheet"
+  />
+  <style>
+    .time {
+      font-size: 60px;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      letter-spacing: 5px;
+      font-family: Orbitron;
+      color: #9028ff;
+    }
+
+    body {
+      background-color: black;
+    }
+  </style>
+</html>
