@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Not fully finished
+         Just not worth it anymore -->
+  </head>
+  <body onload="fillWord()">
+    <div class="text hangman">HANGMAN</div>
+    <div class="text game">VANILLA JAVASCRIPT HANGMAN GAME</div>
+    <div id="hidden_word" class="hidden_word"></div>
+    <div class="alphabet">
+      <div class="letter">a</div>
+      <div class="letter">b</div>
+      <div class="letter">c</div>
+      <div class="letter">d</div>
+      <div class="letter">e</div>
+      <div class="letter">f</div>
+      <div class="letter">g</div>
+      <div class="letter">h</div>
+      <div class="letter">i</div>
+      <div class="letter">j</div>
+      <div class="letter">k</div>
+      <div class="letter">l</div>
+      <div class="letter">m</div>
+      <div class="letter">n</div>
+      <div class="letter">o</div>
+      <div class="letter">p</div>
+      <div class="letter">q</div>
+      <div class="letter">r</div>
+      <div class="letter">s</div>
+      <div class="letter">t</div>
+      <div class="letter">u</div>
+      <div class="letter">v</div>
+      <div class="letter">w</div>
+      <div class="letter">x</div>
+      <div class="letter">y</div>
+      <div class="letter">z</div>
+    </div>
+    <div class="text lives" id="lives"></div>
+    <div class="messages">
+      <div class="button hint" onclick="hint()">Hint</div>
+      <div class="button reload" onclick="location.reload()">Play Again</div>
+    </div>
+  </body>
+</html>
+
+<script>
+  const words_arr = ["age", "something", "else"];
+  let original_word;
+  let display_word;
+  let guessed_chars = "";
+  let done = false;
+  let lives = 10;
+
+  const alphabet = document.querySelectorAll(".letter");
+
+  document.getElementById("lives").innerHTML = "You have " + lives + " lives";
+
+  for (let i = 0; i < alphabet.length; i++) {
+    alphabet[i].addEventListener("click", function () {
+      if (done) {
+        return;
+      }
+      if (original_word.includes(alphabet[i].innerHTML)) {
+        guessed_chars += alphabet[i].innerHTML;
+        display_word = replaceChars();
+        document.getElementById("hidden_word").innerHTML = display_word;
+      } else {
+        if (alphabet[i].style.backgroundColor !== "#DFE8A6") {
+          alphabet[i].style.backgroundColor = "#DFE8A6";
+          alphabet[i].style.borderColor = "#DFE8A6";
+
+          lives--;
+          if (lives === 0) {
+            document.getElementById("lives").innerHTML = "You lost";
+            done = true;
+          } else {
+            document.getElementById("lives").innerHTML =
+              "You have " + lives + " lives";
+          }
+        }
+      }
+    });
+  }
+
+  function hint() {
+    if (lives < 4) {
+      return;
+    }
+    let arr = [];
+    let j = 0;
+    for (let i = 0; i < original_word.length; i++) {
+      if (display_word[i] === "_") {
+        arr[j] = original_word[i];
+        j++;
+      }
+    }
+    let rand = arr[Math.floor(Math.random() * display_word.length)];
+    lives -= 3;
+    document.getElementById("lives").innerHTML = "You have " + lives + " lives";
+
+    guessed_chars += rand;
+    alert(guessed_chars);
+    replaceChars();
+    document.getElementById("hidden_word").innerHTML = display_word;
+  }
+
+  function replaceChars() {
+    display_word = original_word;
+
+    for (let i = 0; i < original_word.length; i++) {
+      if (!guessed_chars.includes(original_word[i])) {
+        display_word = display_word.replaceAt(i, "_");
+      }
+    }
+
+    //check if string is fully found
+    if (!display_word.includes("_")) {
+      done = true;
+      document.getElementById("lives").innerHTML = "Congratulations!";
+    }
+    /*
+    if (lives < 4) {
+      document.getElementById("hint").backgroundColor = "#DFE8A6";
+      document.getElementById("hint").borderColor = "#DFE8A6";
+    }
+*/
+    return display_word;
+  }
+
+  function fillWord() {
+    original_word = words_arr[Math.floor(Math.random() * words_arr.length)];
+    display_word = original_word.replace(/\w/g, "_");
+    document.getElementById("hidden_word").innerHTML = display_word;
+    done = false;
+  }
+
+  //custom replace at index function - https://stackoverflow.com/questions/1431094/how-do-i-replace-a-character-at-a-particular-index-in-javascript
+  String.prototype.replaceAt = function (index, replacement) {
+    return (
+      this.substring(0, index) +
+      replacement +
+      this.substring(index + replacement.length)
+    );
+  };
+</script>
+
+<style>
+  .alphabet div {
+    position: relative;
+    display: inline-block;
+  }
+  .alphabet {
+    text-align: center;
+  }
+  .letter {
+    width: 20px;
+    height: 20px;
+    border: solid white 1px;
+    margin: 0px 0 10px 0;
+    border-radius: 4px;
+    color: #c1d72e;
+    background: white;
+    font-size: 15px;
+    transition: 0.3s ease-in;
+  }
+  .letter:hover {
+    background: #c1d72e;
+    color: white;
+  }
+
+  .hangman {
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 10px;
+  }
+
+  .game {
+    text-align: center;
+  }
+
+  .hidden_word {
+    letter-spacing: 10px;
+    text-align: center;
+    margin: 10px 0 10px 0;
+    color: white;
+  }
+
+  .lives {
+    text-align: center;
+  }
+
+  .text {
+    color: white;
+  }
+  .messages div {
+    display: inline-block;
+  }
+
+  .messages {
+    text-align: center;
+    padding: 10px 0 0 0;
+  }
+  .button {
+    height: 30px;
+    border: solid 1px white;
+    border-radius: 4%;
+    width: 100px;
+    padding: 10px 0 0 0;
+    color: white;
+  }
+  body {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #c1d72e;
+  }
+</style>
