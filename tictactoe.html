@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="score" class="score"></div>
+    <div class="squares">
+      <div class="row1">
+        <div class="square square1"></div>
+        <div class="square square2"></div>
+        <div class="square square3"></div>
+      </div>
+      <div class="row2">
+        <div class="square square4"></div>
+        <div class="square square5"></div>
+        <div class="square square6"></div>
+      </div>
+      <div class="row3">
+        <div class="square square7"></div>
+        <div class="square square8"></div>
+        <div class="square square9"></div>
+      </div>
+    </div>
+    <div class="reset" onclick="resetScores()">Reset Scores</div>
+  </body>
+</html>
+
+<script>
+  let moves_x = true;
+  let moves_arr = [];
+  let done = false;
+  let nr_of_moves = 0;
+  let x_won = 0;
+  let y_won = 0;
+
+  setScores();
+
+  const squares = document.querySelectorAll(".square");
+  for (let i = 0; i < squares.length; i++) {
+    squares[i].addEventListener("click", function () {
+      if (done) {
+        return;
+      }
+      if (squares[i].innerHTML === "x" || squares[i].innerHTML === "o") {
+        return;
+      }
+      if (moves_x) {
+        squares[i].innerHTML = "x";
+        moves_arr[i] = "x";
+      } else {
+        squares[i].innerHTML = "o";
+        moves_arr[i] = "o";
+      }
+      moves_x = !moves_x;
+      nr_of_moves++;
+      checkIfFinished();
+    });
+  }
+  function resetBoard() {
+    setTimeout(function () {
+      moves_arr = [];
+      done = false;
+      nr_of_moves = 0;
+      moves_x = true;
+
+      for (let i = 0; i < squares.length; i++) {
+        squares[i].innerHTML = "";
+      }
+    }, 2000);
+  }
+
+  function setScores() {
+    document.getElementById("score").innerHTML =
+      "X " + x_won + " : " + y_won + " Y";
+  }
+  function checkIfFinished() {
+    if (
+      //horizontal x
+      (moves_arr[0] === "x" && moves_arr[1] === "x" && moves_arr[2] === "x") ||
+      (moves_arr[3] === "x" && moves_arr[4] === "x" && moves_arr[5] === "x") ||
+      (moves_arr[6] === "x" && moves_arr[7] === "x" && moves_arr[8] === "x") ||
+      //vertical x
+      (moves_arr[0] === "x" && moves_arr[3] === "x" && moves_arr[6] === "x") ||
+      (moves_arr[1] === "x" && moves_arr[4] === "x" && moves_arr[7] === "x") ||
+      (moves_arr[2] === "x" && moves_arr[5] === "x" && moves_arr[8] === "x") ||
+      //diagonal x
+      (moves_arr[0] === "x" && moves_arr[4] === "x" && moves_arr[8] === "x") ||
+      (moves_arr[2] === "x" && moves_arr[4] === "x" && moves_arr[6] === "x")
+    ) {
+      x_won++;
+      done = true;
+    } else if (
+      //horizontal o
+      (moves_arr[0] === "o" && moves_arr[1] === "o" && moves_arr[2] === "o") ||
+      (moves_arr[3] === "o" && moves_arr[4] === "o" && moves_arr[5] === "o") ||
+      (moves_arr[6] === "o" && moves_arr[7] === "o" && moves_arr[8] === "o") ||
+      //vertical o
+      (moves_arr[0] === "o" && moves_arr[3] === "o" && moves_arr[6] === "o") ||
+      (moves_arr[1] === "o" && moves_arr[4] === "o" && moves_arr[7] === "o") ||
+      (moves_arr[2] === "o" && moves_arr[5] === "o" && moves_arr[8] === "o") ||
+      //diagonal o
+      (moves_arr[0] === "o" && moves_arr[4] === "o" && moves_arr[8] === "o") ||
+      (moves_arr[2] === "o" && moves_arr[4] === "o" && moves_arr[6] === "o")
+    ) {
+      y_won++;
+      done = true;
+    }
+
+    if (nr_of_moves === 9 || done) {
+      setScores();
+      resetBoard();
+    }
+  }
+
+  function resetScores() {
+    x_won = 0;
+    y_won = 0;
+    setScores();
+  }
+</script>
+
+<style>
+  .reset {
+    padding-top: 10px;
+    text-align: center;
+  }
+
+  .score {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
+  .square {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 10px;
+    background: rgb(204, 194, 194);
+    cursor: pointer;
+    box-shadow: 5px 5px lightblue;
+  }
+
+  .row1 div,
+  .row2 div,
+  .row3 div {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .squares {
+    font-size: 0px;
+  }
+
+  /*setting individual borders*/
+  /*row1*/
+  .square1 {
+    border-right: solid white 1px;
+    border-bottom: solid white 1px;
+    border-top-left-radius: 20%;
+  }
+  .square2 {
+    border-left: solid white 1px;
+    border-bottom: solid white 1px;
+    border-right: solid white 1px;
+  }
+  .square3 {
+    border-left: solid white 1px;
+    border-bottom: solid white 1px;
+    border-top-right-radius: 20%;
+  }
+
+  /*row2*/
+  .square4 {
+    border-top: solid white 1px;
+    border-bottom: solid white 1px;
+    border-right: solid white 1px;
+  }
+  .square5 {
+    border: solid white 1px;
+  }
+  .square6 {
+    border-left: solid white 1px;
+    border-bottom: solid white 1px;
+    border-top: solid white 1px;
+  }
+
+  /*row3*/
+  .square7 {
+    border-top: solid white 1px;
+    border-right: solid white 1px;
+    border-bottom-left-radius: 20%;
+  }
+  .square8 {
+    border-left: solid white 1px;
+    border-top: solid white 1px;
+    border-right: solid white 1px;
+  }
+  .square9 {
+    border-left: solid white 1px;
+    border-top: solid white 1px;
+    border-bottom-right-radius: 20%;
+  }
+
+  body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  /*done setting borders*/
+</style>
